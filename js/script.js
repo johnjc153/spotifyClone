@@ -24,12 +24,14 @@ function loadMusic(indexNumb){
 //play music
 function playMusic(){
     container.classList.add("paused");
+    playPauseBtn.querySelector("i").innerText = "pause";
     mainAudio.play();
 }
 
 //pause music
 function pauseMusic(){
-    container.classList.add("play");
+    container.classList.remove("paused");
+    playPauseBtn.querySelector("i").innerText = "play_arrow";
     mainAudio.pause();
 }
 
