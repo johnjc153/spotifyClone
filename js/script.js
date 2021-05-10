@@ -5,7 +5,8 @@ musicArtist = container.querySelector(".song-details .artist"),
 mainAudio = container.querySelector("#main-audio"),
 playPauseBtn = container.querySelector(".play-pause"),
 prevBtn = container.querySelector("#prev"),
-nextBtn = container.querySelector("#next");
+nextBtn = container.querySelector("#next"),
+progressBar = container.querySelector(".progress-bar");
 
 let musicIndex = 1;
 
@@ -39,10 +40,10 @@ function pauseMusic(){
 
 // next music funtionn
 function nextMusic(){
-    musicIndex++;
-    musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
-    loadMusic(musicIndex);
-    playMusic();
+    musicIndex++; //iterate over music index
+    musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex; //repeats music at end of array
+    loadMusic(musicIndex); //load index
+    playMusic(); //play
 }
 
 function prevMusic(){
@@ -69,4 +70,27 @@ nextBtn.addEventListener("click", ()=>{
 prevBtn.addEventListener("click", ()=>{
     prevMusic();
     console.log(musicIndex - 1);
+});
+
+// update progress bar according to music time
+mainAudio.addEventListener("timeupdate", (e)=>{
+    const currentTime = e.target.currentTime; //get current time of song
+    const duration = e.target.duration; //get duration of song 
+    let progressWidth = (currentTime / duration) * 100;
+    progressBar.style.width = `${progressWidth}%`;
+
+    mainAudio.addEventListener("loadeddata", ()=>{
+        let musicCurrentTime = container.querySelector(".current"),
+        musicDuration = container.querySelector(".duration");
+
+        //update song duration
+        let audioDuration = mainAudio.duration;
+        let totalMin = Math.floor(audioDuration / 60);
+        let totalSec = Math.floor(audioDuration % 60);
+        if(totalSec < 10){
+            totalSec = `0${totalSec}`;
+        }
+        musicDuration.innerText = `${totalMin}:${totalSec}`;
+
+    });
 });
