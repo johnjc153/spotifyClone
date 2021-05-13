@@ -45,7 +45,8 @@ function nextMusic(){
     loadMusic(musicIndex); //load index
     playMusic(); //play
 }
-
+ 
+//prev music function
 function prevMusic(){
     musicIndex--;
     musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
@@ -84,6 +85,15 @@ mainAudio.addEventListener("timeupdate", (e)=>{
         musicDuration = container.querySelector(".duration");
 
         //update song duration
+        let audioDuration = mainAudio.duration;
+        let totalMin = Math.floor(audioDuration / 60);
+        let totalSec = Math.floor(audioDuration % 60);
+        if(totalSec < 10){
+            totalSec = `0${totalSec}`;
+        }
+        musicDuration.innerText = `${totalMin}:${totalSec}`;
+
+        //update current song durration
         let audioDuration = mainAudio.duration;
         let totalMin = Math.floor(audioDuration / 60);
         let totalSec = Math.floor(audioDuration % 60);
